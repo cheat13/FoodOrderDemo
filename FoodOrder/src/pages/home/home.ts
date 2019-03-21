@@ -11,4 +11,7 @@ export class HomePage {
 
   }
 
+  goBasket(){
+    this.navCtrl.push('OrderPage');
+  }
 }
