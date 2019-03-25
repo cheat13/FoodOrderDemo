@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
 import { Food, GlobalVariables } from '../../app/models';
+import { CallApiProvider } from '../../providers/call-api/call-api';
 
 @Component({
   selector: 'page-home',
@@ -11,7 +12,7 @@ export class HomePage {
 
   public menu: Food[] = [];
 
-  constructor(public navCtrl: NavController, private http: HttpClient) {
+  constructor(public navCtrl: NavController, private http: HttpClient,public CallApi: CallApiProvider) {
 
   }
 

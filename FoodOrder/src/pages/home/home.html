@@ -11,6 +11,7 @@
       <button ion-button clear color="danger" (click)="goBasket()">
         <ion-icon large>
           <img src="../../assets/imgs/basket.png" width="20px">
+         
         </ion-icon>
       </button>
       <button ion-button clear color="danger">
@@ -23,11 +24,11 @@
 
 <ion-content padding style="background-color:black">
   <h1 class="header">เมนูแนะนำ</h1>
-  <ion-card>
-    <img src="../../assets/imgs/02_20150122172551GLWY.jpg" alt="">
+  <ion-card *ngFor="let p of menu">
+    <img src= "{{p.image}}" >
     <ion-row>
       <ion-col co-6>
-        <h1>สเต็กหมูโคโรบุตะ</h1>
+        <h1>{{p.name}}</h1>
       </ion-col>
       <ion-col col-4>
         <ion-buttons icon-end color="danger">
@@ -41,92 +42,17 @@
 
     <ion-row>
       <ion-col col-8>
-        <h2>
-          ฿450.00
-        </h2>
+       <h2>{{p.price}}</h2>
 
       </ion-col>
       <ion-col col-4 right>
-        cooking 6 min.
+        <h6>cooking {{p.cookingTime}} min.</h6> 
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col class="sub">
-        เนื้อหมู นำมาย่างโดยใช้ไฟอ่อนๆ จนเนื้อ
-        มีความนุ่มลิ้นเข้าถึงรสชาติ
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <h1 class="header">
-    เมนูยอดนิยม</h1>
-  <ion-card>
-    <img src="../../assets/imgs/02_20150122172551GLWY.jpg" alt="">
-    <ion-row>
-      <ion-col co-6>
-        <h1>สเต็กหมู</h1>
-      </ion-col>
-      <ion-col col-4>
-        <ion-buttons icon-end color="danger">
-          <button class="btnAdd" ion-button clear icon-onyly color="danger">
-            <h2>Add Order</h2>
-
-          </button>
-        </ion-buttons>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col col-8>
-        <h2>
-          ฿450.00
-        </h2>
-
-      </ion-col>
-      <ion-col col-4 right>
-        cooking 6 min.
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col class="sub">
-        เนื้อหมู นำมาย่างโดยใช้ไฟอ่อนๆ จนเนื้อ
-        มีความนุ่มลิ้นเข้าถึงรสชาติ
-      </ion-col>
-    </ion-row>
-  </ion-card>
-  <ion-card>
-    <img src="../../assets/imgs/02_20150122172551GLWY.jpg" alt="">
-    <ion-row>
-      <ion-col co-6>
-        <h1>สเต็กปลา</h1>
-      </ion-col>
-      <ion-col col-4>
-        <ion-buttons icon-end color="danger">
-          <button class="btnAdd" ion-button clear icon-onyly color="danger">
-            <h2>Add Order</h2>
-
-          </button>
-        </ion-buttons>
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col col-8>
-        <h2>
-          ฿450.00
-        </h2>
-
-      </ion-col>
-      <ion-col col-4 right>
-        cooking 6 min.
-      </ion-col>
-    </ion-row>
-
-    <ion-row>
-      <ion-col class="sub">
-        เนื้อหมู นำมาย่างโดยใช้ไฟอ่อนๆ จนเนื้อ
-        มีความนุ่มลิ้นเข้าถึงรสชาติ
+       {{p.description}}
       </ion-col>
     </ion-row>
   </ion-card>
