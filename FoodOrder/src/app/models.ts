@@ -17,5 +17,5 @@ export class Order {
 }
 
 export class GlobalVariables {
-    public static order: Order = new Order;
+    public static order: Order = new Order();
 }

@@ -11,7 +11,7 @@
       <button ion-button clear color="danger" (click)="goBasket()">
         <ion-icon large>
           <img src="../../assets/imgs/basket.png" width="20px">
-         
+
         </ion-icon>
       </button>
       <button ion-button clear color="danger">
@@ -24,17 +24,16 @@
 
 <ion-content padding style="background-color:black">
   <h1 class="header">เมนูแนะนำ</h1>
-  <ion-card *ngFor="let p of menu">
-    <img src= "{{p.image}}" >
+  <ion-card *ngFor="let food of menu">
+    <img src="{{food.image}}" height="200px" width="500px">
     <ion-row>
       <ion-col co-6>
-        <h1>{{p.name}}</h1>
+        <h1>{{food.name}}</h1>
       </ion-col>
       <ion-col col-4>
         <ion-buttons icon-end color="danger">
-          <button class="btnAdd" ion-button clear icon-onyly color="danger">
+          <button class="btnAdd" ion-button clear icon-onyly color="danger" (click)="addFood(food)">
             <h2>Add Order</h2>
-
           </button>
         </ion-buttons>
       </ion-col>
@@ -42,17 +41,17 @@
 
     <ion-row>
       <ion-col col-8>
-       <h2>{{p.price}}</h2>
+        <h2>{{food.price}}</h2>
 
       </ion-col>
       <ion-col col-4 right>
-        <h6>cooking {{p.cookingTime}} min.</h6> 
+        <h6>cooking {{food.cookingTime}} min.</h6>
       </ion-col>
     </ion-row>
 
     <ion-row>
       <ion-col class="sub">
-       {{p.description}}
+        {{food.description}}
       </ion-col>
     </ion-row>
   </ion-card>
