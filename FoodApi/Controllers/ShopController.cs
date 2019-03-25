@@ -18,14 +18,24 @@ namespace FoodApi.Controllers
                 Name = "สเต๊กเนื้อ",
                 Price = 129,
                 Description = "เนื้อชั้นดี เบอร์ตอง",
-                CookingTime = 10
+                CookingTime = 10 ,
+                Image = "../../assets/imgs/hqdefault.jpg"
             },
             new Food{
                 Id = Guid.NewGuid().ToString(),
                 Name = "สเต๊กหมู",
                 Price = 99,
                 Description = "หมูชั้นดี เบอร์ตอง",
-                CookingTime = 10
+                CookingTime = 10,
+                Image = "../../assets/imgs/02_20150122172551GLWY.jpg"
+            },
+            new Food{
+                Id = Guid.NewGuid().ToString(),
+                Name = "กระหรี่",
+                Price = 999999999,
+                Description = "กระหรี่ชั้นดี เบอร์ตอง",
+                CookingTime = 10,
+                Image = "../../assets/imgs/02_20150122172551GLWY.jpg"
             }
         };
 
