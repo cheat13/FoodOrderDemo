@@ -9,7 +9,7 @@ namespace FoodApi.Controllers
 {
     [Route("api/[controller]/[action]")]
     [ApiController]
-    public class FoodOrderController : ControllerBase
+    public class ShopController : ControllerBase
     {
         public static List<Food> Menu = new List<Food>
         {
@@ -41,5 +41,26 @@ namespace FoodApi.Controllers
             return Menu.FirstOrDefault(it => it.Id == id);
         }
 
+        [HttpPost]
+        public void AddFood([FromBody]Food food)
+        {
+            food.Id = Guid.NewGuid().ToString();
+            Menu.Add(food);
+        }
+
+        [HttpPut]
+        public void EditFood([FromBody]Food newFood)
+        {
+            var oldFood = Menu.FirstOrDefault(it => it.Id == newFood.Id);
+            Menu.Remove(oldFood);
+            Menu.Add(newFood);
+        }
+
+        [HttpDelete("{id}")]
+        public void DeleteFood(string id)
+        {
+            var food = Menu.FirstOrDefault(it => it.Id == id);
+            Menu.Remove(food);
+        }
     }
 }
