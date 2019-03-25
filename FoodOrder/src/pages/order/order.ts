@@ -32,11 +32,10 @@ export class OrderPage {
   }
 
   sendToKitchen() {
-
     this.http.post('http://localhost:5000/api/Orders/AddOrder', this.order)
       .subscribe(data => {
         console.log('ส่งแล้วนะ');
-        GlobalVariables.order = new Order;
+        GlobalVariables.order = new Order();
       })
   }
 

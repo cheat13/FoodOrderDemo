@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { NavController } from 'ionic-angular';
-import { Food, GlobalVariables } from '../../app/models';
+import { Food, GlobalVariables, Order } from '../../app/models';
 import { CallApiProvider } from '../../providers/call-api/call-api';
 
 @Component({
@@ -11,13 +11,20 @@ import { CallApiProvider } from '../../providers/call-api/call-api';
 export class HomePage {
 
   public menu: Food[] = [];
+  public order: Order = new Order();
 
-  constructor(public navCtrl: NavController, private http: HttpClient,public CallApi: CallApiProvider) {
+  constructor(public navCtrl: NavController, private http: HttpClient, public callApi: CallApiProvider) {
 
   }
 
-  ionViewDidLoad() {
+  ionViewDidEnter() {
     this.getMenu();
+    this.order = GlobalVariables.order;
+    if (this.order.foods == null) {
+      this.order.foods = [];
+    }
+    console.log(this.order.foods);
+
   }
 
   goBasket() {
@@ -25,14 +32,17 @@ export class HomePage {
   }
 
   getMenu() {
-    this.http.get<Food[]>('http://localhost:5000/api/Shop/GetMenu')
-      .subscribe(data => {
-        this.menu = data;
-        console.log(this.menu);
-      })
+    this.callApi.GetAllFoodOrder().subscribe(data => {
+      this.menu = data;
+      console.log(this.menu);
+    })
   }
 
   addFood(food: Food) {
-    GlobalVariables.order.foods.push(food);
+    if (this.order.foods.every(it => it.id != food.id)) {
+      this.order.foods.push(food);
+      GlobalVariables.order = this.order;
+    }
+    console.log(GlobalVariables.order);
   }
 }
