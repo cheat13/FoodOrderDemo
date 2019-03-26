@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { Order, GlobalVariables } from '../../app/models';
+import { IonicPage, NavController, NavParams, DateTime } from 'ionic-angular';
+import { Order, GlobalVariables, Food } from '../../app/models';
 import { CallApiProvider } from '../../providers/call-api/call-api';
 
 /**
@@ -18,29 +18,49 @@ import { CallApiProvider } from '../../providers/call-api/call-api';
 })
 export class OrderPage {
 
-  order: Order = new Order;
+  public foods: Food[] = [];
+  totalPrice: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient,public callApi: CallApiProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient, public callApi: CallApiProvider) {
   }
-
 
   ionViewDidEnter() {
     console.log('ionViewDidEnter OrderPage');
-    this.order = GlobalVariables.order;
-    console.log(this.order);
+    this.foods = GlobalVariables.foods;
+    this.calcTotalPrice();
+    console.log(this.foods);
   }
 
-  onClick() {
-    this.order.totalPrice = this.order.foods.map(it => it.price * it.amount).reduce((a, b) => a + b);
+  increase(index: number) {
+    this.foods[index].amount += 1;
+    this.calcTotalPrice();
+  }
+
+  decrease(index: number) {
+    this.foods[index].amount -= (this.foods[index].amount == 1) ? 0 : 1;
+    this.calcTotalPrice();
+  }
+
+  delete(index: number) {
+    this.foods.splice(index, 1);
+    this.calcTotalPrice();
+  }
+
+  calcTotalPrice() {
+    this.totalPrice = this.foods.length > 0 ? this.foods.map(it => it.price * it.amount).reduce((a, b) => a + b) : 0;
   }
 
   sendToKitchen() {
-    this.http.post('http://localhost:5000/api/Orders/AddOrder', this.order)
-      .subscribe(data => {
+    if (this.foods.length > 0) {
+      let order = new Order();
+      order.foods = this.foods;
+      order.totalPrice = this.totalPrice;
+      this.callApi.SendToKitchen(order).subscribe(data => {
         console.log('ส่งแล้วนะ');
-        GlobalVariables.order = new Order();
+        GlobalVariables.foods = [];
       })
+    }
+    this.navCtrl.pop();
   }
-  
 
 }

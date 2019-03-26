@@ -11,7 +11,7 @@ import { CallApiProvider } from '../../providers/call-api/call-api';
 export class HomePage {
 
   public menu: Food[] = [];
-  public order: Order = new Order();
+  public foods: Food[] = [];
 
   constructor(public navCtrl: NavController, private http: HttpClient, public callApi: CallApiProvider) {
 
@@ -20,12 +20,12 @@ export class HomePage {
   ionViewDidEnter() {
     console.log('ionViewDidEnter HomePage');
     this.getMenu();
-    this.order = GlobalVariables.order;
-    this.order.foods = GlobalVariables.order.foods || [];
-    console.log(this.order);
+    this.foods = GlobalVariables.foods;
+    console.log(this.foods);
   }
 
   goBasket() {
+    GlobalVariables.foods = this.foods;
     this.navCtrl.push('OrderPage');
   }
 
@@ -37,10 +37,10 @@ export class HomePage {
   }
 
   addFood(food: Food) {
-    if (this.order.foods.every(it => it.id != food.id)) {
-      this.order.foods.push(food);
-      GlobalVariables.order = this.order;
+    if (this.foods.every(it => it.id != food.id)) {
+      food.amount = 1;
+      this.foods.push(food);
     }
-    console.log(GlobalVariables.order);
+    console.log(GlobalVariables.foods);
   }
 }

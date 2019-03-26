@@ -13,9 +13,9 @@ export class Order {
     id: string;
     foods: Food[];
     totalPrice: number;
-    date: Date;
+    date: Date | string;
 }
 
 export class GlobalVariables {
-    public static order: Order = new Order();
+    public static foods: Food[] = [];
 }
