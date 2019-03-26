@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
 import { Order, GlobalVariables } from '../../app/models';
+import { CallApiProvider } from '../../providers/call-api/call-api';
 
 /**
  * Generated class for the OrderPage page.
@@ -19,7 +20,7 @@ export class OrderPage {
 
   order: Order = new Order;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient) {
+  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient,public callApi: CallApiProvider) {
   }
 
 
@@ -40,5 +41,6 @@ export class OrderPage {
         GlobalVariables.order = new Order();
       })
   }
+  
 
 }
