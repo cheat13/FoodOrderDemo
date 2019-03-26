@@ -21,21 +21,21 @@
 
       </ion-col>
       <ion-col col-4 right>
-        <h2> ฿346.00</h2>
+        <h2> ฿346.00 </h2>
       </ion-col>
     </ion-row>
   </ion-item>
   <h1 class="respond">
     Order pending....
   </h1>
-  <ion-item>
+  <ion-item *ngFor="let food of order.foods">
     <ion-row>
       <ion-col col-6>
         <ion-row>
-          <h1>สเต็กหมู</h1>
+          <h1>{{food.name}}</h1>
         </ion-row>
         <ion-row>
-          <h1>฿390.oo</h1>
+          <h2>ราคา {{food.price}} บาท</h2>
         </ion-row>
       </ion-col>
 
@@ -56,68 +56,9 @@
       </ion-col>
     </ion-row>
   </ion-item>
-
-  <ion-item>
-      <ion-row>
-        <ion-col col-6>
-          <ion-row>
-            <h1>สเต็กหมู</h1>
-          </ion-row>
-          <ion-row>
-            <h1>฿390.oo</h1>
-          </ion-row>
-        </ion-col>
-  
-        <ion-col col-6 class="add">
-          <ion-col>
-            <button ion-button small clear color="danger">
-              <ion-icon name="remove-circle"></ion-icon>
-            </button>
-          </ion-col>
-          <ion-col>
-            1
-          </ion-col>
-          <ion-col>
-            <button ion-button small clear color="danger">
-              <ion-icon name="add-circle"></ion-icon>
-            </button>
-          </ion-col>
-        </ion-col>
-      </ion-row>
-    </ion-item>
-
-
-    <ion-item>
-        <ion-row>
-          <ion-col col-6>
-            <ion-row>
-              <h1>สเต็กหมู</h1>
-            </ion-row>
-            <ion-row>
-              <h1>฿390.oo</h1>
-            </ion-row>
-          </ion-col>
-    
-          <ion-col col-6 class="add">
-            <ion-col>
-              <button ion-button small clear color="danger">
-                <ion-icon name="remove-circle"></ion-icon>
-              </button>
-            </ion-col>
-            <ion-col>
-             3
-            </ion-col>
-            <ion-col>
-              <button ion-button small clear color="danger">
-                <ion-icon name="add-circle"></ion-icon>
-              </button>
-            </ion-col>
-          </ion-col>
-        </ion-row>
-      </ion-item>
 </ion-content>
 <ion-footer text-center style="background-color:red">
-  <button ion-button clear full color="light">
+  <button ion-button clear full color="light" (click)="sendToKitchen(order)">
    Send To Kitchen
   </button>
 </ion-footer>
