@@ -18,13 +18,11 @@ export class HomePage {
   }
 
   ionViewDidEnter() {
+    console.log('ionViewDidEnter HomePage');
     this.getMenu();
     this.order = GlobalVariables.order;
-    if (this.order.foods == null) {
-      this.order.foods = [];
-    }
-    console.log(this.order.foods);
-
+    this.order.foods = GlobalVariables.order.foods || [];
+    console.log(this.order);
   }
 
   goBasket() {

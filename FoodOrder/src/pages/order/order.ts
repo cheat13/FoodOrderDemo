@@ -22,9 +22,11 @@ export class OrderPage {
   constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient) {
   }
 
-  ionViewDidLoad() {
-    console.log('ionViewDidLoad OrderPage');
+
+  ionViewDidEnter() {
+    console.log('ionViewDidEnter OrderPage');
     this.order = GlobalVariables.order;
+    console.log(this.order);
   }
 
   onClick() {
