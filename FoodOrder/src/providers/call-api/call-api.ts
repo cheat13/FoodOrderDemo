@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Food } from '../../app/models';
+import { Food, Order } from '../../app/models';
 
 /*
   Generated class for the CallApiProvider provider.
@@ -20,6 +20,10 @@ export class CallApiProvider {
 
   public GetAllFoodOrder() {
     return this.http.get<Food[]>(this.host + 'api/Shop/GetMenu');
+  }
+
+  public SendToKitchen(order: Order) {
+    return this.http.post(this.host + 'api/Orders/AddOrder', order);
   }
 
 }
