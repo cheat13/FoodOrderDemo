@@ -19,7 +19,7 @@ namespace FoodApi.Controllers
                 Price = 129,
                 Description = "เนื้อชั้นดี เบอร์ตอง",
                 CookingTime = 10 ,
-                Image = "../../assets/imgs/hqdefault.jpg"
+                Image = "../../assets/imgs/image003.jpg"
             },
             new Food{
                 Id = Guid.NewGuid().ToString(),
@@ -31,11 +31,19 @@ namespace FoodApi.Controllers
             },
             new Food{
                 Id = Guid.NewGuid().ToString(),
-                Name = "กระหรี่",
-                Price = 999999999,
-                Description = "กระหรี่ชั้นดี เบอร์ตอง",
+                Name = "สปาเก็ตตี้ผัดพริกแห้ง",
+                Price = 89,
+                Description = "เส้นเหนียวนุ่ม เผ็ดร้อน หอมกลิ่นพริก  ",
                 CookingTime = 10,
-                Image = "../../assets/imgs/02_20150122172551GLWY.jpg"
+                Image = "../../assets/imgs/spagetty.jpg"
+            },
+            new Food{
+                Id = Guid.NewGuid().ToString(),
+                Name = "ผักโขมอบชีส",
+                Price = 89,
+                Description = " หวาน หอม กรอบ อร่อย",
+                CookingTime = 10,
+                Image = "../../assets/imgs/1379138109381.jpg"
             }
         };
 
