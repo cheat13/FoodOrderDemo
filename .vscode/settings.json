@@ -1,0 +1,4 @@
+{
+    "appService.defaultWebAppToDeploy": "/subscriptions/b2b9cb00-dad1-4243-9448-7af38c61ca1e/resourceGroups/start-nook/providers/Microsoft.Web/sites/Kritna",
+    "appService.deploySubpath": "FoodApi\\bin\\Debug\\netcoreapp2.2\\publish"
+}

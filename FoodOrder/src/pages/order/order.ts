@@ -55,12 +55,15 @@ export class OrderPage {
       let order = new Order();
       order.foods = this.foods;
       order.totalPrice = this.totalPrice;
-      this.callApi.SendToKitchen(order).subscribe(data => {
+      this.callApi.SendToKitchen(order).subscribe(() => {
         console.log('ส่งแล้วนะ');
         GlobalVariables.foods = [];
+        this.navCtrl.pop();
       })
     }
-    this.navCtrl.pop();
+    else {
+      this.navCtrl.pop();
+    }
   }
 
 }

@@ -1,9 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Authentication;
 using System.Threading.Tasks;
 using FoodApi.Models;
 using Microsoft.AspNetCore.Mvc;
+using MongoDB.Driver;
 
 namespace FoodApi.Controllers
 {
@@ -11,74 +13,49 @@ namespace FoodApi.Controllers
     [ApiController]
     public class ShopController : ControllerBase
     {
-        public static List<Food> Menu = new List<Food>
+        IMongoCollection<Food> Menu { get; set; }
+        public ShopController()
         {
-            new Food{
-                Id = Guid.NewGuid().ToString(),
-                Name = "สเต๊กเนื้อ",
-                Price = 129,
-                Description = "เนื้อชั้นดี เบอร์ตอง",
-                CookingTime = 10 ,
-                Image = "../../assets/imgs/image003.jpg"
-            },
-            new Food{
-                Id = Guid.NewGuid().ToString(),
-                Name = "สเต๊กหมู",
-                Price = 99,
-                Description = "หมูชั้นดี เบอร์ตอง",
-                CookingTime = 10,
-                Image = "../../assets/imgs/02_20150122172551GLWY.jpg"
-            },
-            new Food{
-                Id = Guid.NewGuid().ToString(),
-                Name = "สปาเก็ตตี้ผัดพริกแห้ง",
-                Price = 89,
-                Description = "เส้นเหนียวนุ่ม เผ็ดร้อน หอมกลิ่นพริก  ",
-                CookingTime = 10,
-                Image = "../../assets/imgs/spagetty.jpg"
-            },
-            new Food{
-                Id = Guid.NewGuid().ToString(),
-                Name = "ผักโขมอบชีส",
-                Price = 89,
-                Description = " หวาน หอม กรอบ อร่อย",
-                CookingTime = 10,
-                Image = "../../assets/imgs/1379138109381.jpg"
-            }
-        };
+            var settings = MongoClientSettings.FromUrl(new MongoUrl("mongodb://krit_NA:thegigclubna2522@ds125322.mlab.com:25322/kritna"));
+            settings.SslSettings = new SslSettings()
+            {
+                EnabledSslProtocols = SslProtocols.Tls12
+            };
+            var mongoClient = new MongoClient(settings);
+            var database = mongoClient.GetDatabase("kritna");
+            Menu = database.GetCollection<Food>("Menu");
+        }
 
         [HttpGet]
         public ActionResult<List<Food>> GetMenu()
         {
-            return Menu;
+            return Menu.Find(it => true).ToList();
         }
 
         [HttpGet("{id}")]
         public ActionResult<Food> GetFood(string id)
         {
-            return Menu.FirstOrDefault(it => it.Id == id);
+            var food = Menu.Find(it => it.Id == id).FirstOrDefault();
+            return food;
         }
 
         [HttpPost]
         public void AddFood([FromBody]Food food)
         {
             food.Id = Guid.NewGuid().ToString();
-            Menu.Add(food);
+            Menu.InsertOne(food);
         }
 
         [HttpPut]
-        public void EditFood([FromBody]Food newFood)
+        public void EditFood([FromBody]Food food)
         {
-            var oldFood = Menu.FirstOrDefault(it => it.Id == newFood.Id);
-            Menu.Remove(oldFood);
-            Menu.Add(newFood);
+            Menu.ReplaceOne(it => it.Id == food.Id, food);
         }
 
         [HttpDelete("{id}")]
         public void DeleteFood(string id)
         {
-            var food = Menu.FirstOrDefault(it => it.Id == id);
-            Menu.Remove(food);
+            Menu.DeleteOne(it => it.Id == id);
         }
     }
 }
