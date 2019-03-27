@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { IonicPage, NavController, NavParams, DateTime } from 'ionic-angular';
+import { IonicPage, NavController, NavParams, DateTime, ToastController, AlertController } from 'ionic-angular';
 import { Order, GlobalVariables, Food } from '../../app/models';
 import { CallApiProvider } from '../../providers/call-api/call-api';
 
@@ -21,7 +21,9 @@ export class OrderPage {
   public foods: Food[] = [];
   totalPrice: number = 0;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, private http: HttpClient, public callApi: CallApiProvider) {
+  constructor(public navCtrl: NavController, public navParams: NavParams,
+    private http: HttpClient, public callApi: CallApiProvider,
+    public toastCtrl: ToastController, public alertCtrl: AlertController) {
   }
 
   ionViewDidEnter() {
@@ -42,8 +44,7 @@ export class OrderPage {
   }
 
   delete(index: number) {
-    this.foods.splice(index, 1);
-    this.calcTotalPrice();
+    this.showConfirmDelete(index);
   }
 
   calcTotalPrice() {
@@ -51,19 +52,108 @@ export class OrderPage {
   }
 
   sendToKitchen() {
-    if (this.foods.length > 0) {
-      let order = new Order();
-      order.foods = this.foods;
-      order.totalPrice = this.totalPrice;
-      this.callApi.SendToKitchen(order).subscribe(() => {
-        console.log('ส่งแล้วนะ');
-        GlobalVariables.foods = [];
-        this.navCtrl.pop();
-      })
-    }
-    else {
-      this.navCtrl.pop();
-    }
+    (this.foods.length > 0) ? this.showConfirmSendOrder() : this.presentToastEmpty();
+  }
+
+  presentToastSend() {
+    const toast = this.toastCtrl.create({
+      message: 'ส่งรายการสำเร็จ',
+      duration: 2000,
+    });
+    toast.present();
+  }
+
+  presentToastEmpty() {
+    const toast = this.toastCtrl.create({
+      message: 'ไม่มีรายการ!',
+      duration: 2000,
+    });
+    toast.present();
+  }
+
+  showConfirmSendOrder() {
+    let order = 'จำนวน / รายการ<br>';
+    this.foods.forEach(it => {
+      order += it.amount + ' ------> ' + it.name + '<br>'
+    })
+    const confirm = this.alertCtrl.create({
+      title: 'ยืนยันรายการ?',
+      message: order + '<br>ทั้งหมด ' + this.totalPrice + ' บาท',
+      buttons: [
+        {
+          text: 'ยกเลิก',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'ตกลง',
+          handler: () => {
+            let order = new Order();
+            order.foods = this.foods;
+            order.totalPrice = this.totalPrice;
+            this.callApi.SendToKitchen(order).subscribe(() => {
+              GlobalVariables.foods = [];
+              this.presentToastSend();
+              this.navCtrl.pop();
+            })
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  showConfirmDelete(index: number) {
+    const confirm = this.alertCtrl.create({
+      title: 'ต้องการลบรายการนี้?',
+      message: this.foods[index].name,
+      buttons: [
+        {
+          text: 'ยกเลิก',
+          handler: () => {
+            console.log('Disagree clicked');
+          }
+        },
+        {
+          text: 'ตกลง',
+          handler: () => {
+            this.foods.splice(index, 1);
+            this.calcTotalPrice();
+          }
+        }
+      ]
+    });
+    confirm.present();
+  }
+
+  showPromptComment(index: number) {
+    let comment = this.foods[index].comment;
+    const prompt = this.alertCtrl.create({
+      title: 'Comment',
+      inputs: [
+        {
+          name: 'comment',
+          placeholder: (comment != 'string') ? comment : 'เช่น สุกมาก/น้อย, เผ็ดมาก/น้อย'
+        },
+      ],
+      buttons: [
+        {
+          text: 'ยกเลิก',
+          handler: data => {
+            console.log('Cancel clicked');
+          }
+        },
+        {
+          text: 'บันทึก',
+          handler: data => {
+            this.foods[index].comment = data.comment || comment;
+            console.log('Saved clicked');
+          }
+        }
+      ]
+    });
+    prompt.present();
   }
 
 }

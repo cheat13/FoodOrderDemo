@@ -3,56 +3,60 @@
     <button ion-button menuToggle color="danger">
       <ion-icon name="menu"></ion-icon>
     </button>
-    <ion-title>Recommend</ion-title>
+    <ion-title>Menu</ion-title>
     <ion-buttons end>
-      <button ion-button clear color="danger">
+      <!-- <button ion-button clear color="danger">
         โต๊ะ1
-      </button>
-      <button ion-button clear color="danger" (click)="goBasket()">
-        <ion-icon large>
-          <img src="../../assets/imgs/basket.png" width="20px">
-
+      </button> -->
+      <button ion-button icon-only color="danger" (click)="goBasket()">
+        <ion-badge color="danger" *ngIf="foods.length > 0">{{foods.length}}</ion-badge>
+        <ion-icon>
+          <img src="https://foodorders.azurewebsites.net/assets/imgs/basket.png" width="25px">
         </ion-icon>
       </button>
-      <button ion-button clear color="danger">
+      <!-- <button ion-button clear color="danger">
         <ion-icon name="search"></ion-icon>
-      </button>
+      </button> -->
     </ion-buttons>
-
   </ion-navbar>
 </ion-header>
 
 <ion-content padding style="background-color:black">
+
   <h1 class="header">เมนูแนะนำ</h1>
+
   <ion-card *ngFor="let food of menu">
+
     <img src="{{food.image}}" height="200px" width="500px">
-    <ion-row>
-      <ion-col co-6>
-        <h1>{{food.name}}</h1>
-      </ion-col>
-      <ion-col col-4>
-        <ion-buttons icon-end color="danger">
-          <button class="btnAdd" ion-button clear icon-onyly color="danger" (click)="addFood(food)">
-            <h2>Add Order</h2>
+
+    <div padding-left>
+      <ion-row align-items-center>
+        <ion-col col-7>
+          <h1>{{food.name}}</h1>
+        </ion-col>
+        <ion-col col-5 text-right>
+          <button ion-button clear color="danger" (click)="addFood(food)">
+            Add Order
           </button>
-        </ion-buttons>
-      </ion-col>
-    </ion-row>
+        </ion-col>
+      </ion-row>
 
-    <ion-row>
-      <ion-col col-8>
-        <h2> ราคา {{food.price}} บาท</h2>
+      <ion-row align-items-center>
+        <ion-col col-6>
+          <h2><b>ราคา {{food.price}} บาท</b></h2>
+        </ion-col>
+        <ion-col col-6 text-right>
+          <h6>cooking {{food.cookingTime}} min.</h6>
+        </ion-col>
+      </ion-row>
 
-      </ion-col>
-      <ion-col col-4 right>
-        <h6>cooking {{food.cookingTime}} min.</h6>
-      </ion-col>
-    </ion-row>
+      <ion-row>
+        <ion-col>
+          <h2>{{food.description}}</h2>
+        </ion-col>
+      </ion-row>
+    </div>
 
-    <ion-row>
-      <ion-col class="sub">
-        {{food.description}}
-      </ion-col>
-    </ion-row>
   </ion-card>
+
 </ion-content>

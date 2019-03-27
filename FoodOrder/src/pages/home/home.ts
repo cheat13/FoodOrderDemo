@@ -1,6 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Component } from '@angular/core';
-import { NavController } from 'ionic-angular';
+import { NavController, ToastController } from 'ionic-angular';
 import { Food, GlobalVariables, Order } from '../../app/models';
 import { CallApiProvider } from '../../providers/call-api/call-api';
 
@@ -13,7 +13,7 @@ export class HomePage {
   public menu: Food[] = [];
   public foods: Food[] = [];
 
-  constructor(public navCtrl: NavController, private http: HttpClient, public callApi: CallApiProvider) {
+  constructor(public navCtrl: NavController, private http: HttpClient, public callApi: CallApiProvider, public toastCtrl: ToastController) {
 
   }
 
@@ -40,7 +40,27 @@ export class HomePage {
     if (this.foods.every(it => it.id != food.id)) {
       food.amount = 1;
       this.foods.push(food);
+      this.presentToastAdded();
+    }
+    else {
+      this.presentToastAlready();
     }
     console.log(GlobalVariables.foods);
+  }
+
+  presentToastAdded() {
+    const toast = this.toastCtrl.create({
+      message: 'เพิ่มรายการสำเร็จ',
+      duration: 2000,
+    });
+    toast.present();
+  }
+
+  presentToastAlready() {
+    const toast = this.toastCtrl.create({
+      message: 'มีรายการนี้แล้ว!',
+      duration: 2000,
+    });
+    toast.present();
   }
 }
