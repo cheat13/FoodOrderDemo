@@ -32,5 +32,18 @@ namespace FoodApi.Controllers
             order.Date = new DateTime();
             Orders.Add(order);
         }
+
+        [HttpDelete]
+        public void DeleteAllOrders()
+        {
+            Orders = new List<Order>();
+        }
+
+        [HttpDelete("{id}")]
+        public void DeleteOrder(string id)
+        {
+            var order = Orders.FirstOrDefault(it => it.Id == id);
+            Orders.Remove(order);
+        }
     }
 }
