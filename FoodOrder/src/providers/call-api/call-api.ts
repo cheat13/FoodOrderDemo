@@ -15,7 +15,7 @@ export class CallApiProvider {
 
   constructor(public http: HttpClient) {
     console.log('Hello CallApiProvider Provider');
-    this.host = "http://localhost:5000/";
+    this.host = "https://kritna.azurewebsites.net/";
   }
 
   public GetAllFoodOrder() {

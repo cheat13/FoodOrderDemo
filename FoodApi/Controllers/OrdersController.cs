@@ -29,6 +29,7 @@ namespace FoodApi.Controllers
         public void AddOrder([FromBody]Order order)
         {
             order.Id = Guid.NewGuid().ToString();
+            order.Date = new DateTime();
             Orders.Add(order);
         }
     }
