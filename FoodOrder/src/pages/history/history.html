@@ -1,0 +1,30 @@
+<ion-header>
+  <ion-navbar>
+    <button ion-button menuToggle color="danger">
+      <ion-icon name="menu"></ion-icon>
+    </button>
+    <ion-title>History</ion-title>
+  </ion-navbar>
+</ion-header>
+
+<ion-content padding>
+
+  <ion-card *ngFor="let order of orders" (click)="goOrderInfo(order)">
+    <ion-item style="background-color:lightgray;">
+      {{ order.date | date: 'dd/MM/yyyy HH:mm'}} น.
+    </ion-item>
+    <ion-item>
+      <ion-row>
+        <ion-icon color="secondary" style="font-size: 45px" name="md-clipboard"></ion-icon>
+        <ion-col padding-left>
+          <h2>จำนวน {{ order.totalAmount | number }} รายการ</h2>
+          <h2><b>รวม {{ order.totalPrice | number }} บาท</b></h2>
+        </ion-col>
+        <button clear ion-button icon-only>
+          <ion-icon name="arrow-forward"></ion-icon>
+        </button>
+      </ion-row>
+    </ion-item>
+  </ion-card>
+
+</ion-content>

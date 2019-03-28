@@ -12,6 +12,7 @@ export class Food {
 export class Order {
     id: string;
     foods: Food[];
+    totalAmount: number;
     totalPrice: number;
     date: Date | string;
 }

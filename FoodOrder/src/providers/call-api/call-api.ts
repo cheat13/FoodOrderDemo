@@ -26,4 +26,8 @@ export class CallApiProvider {
     return this.http.post(this.host + 'api/Orders/AddOrder', order);
   }
 
+  public GetAllOrders() {
+    return this.http.get<Order[]>(this.host + 'api/Orders/GetAllOrders');
+  }
+
 }

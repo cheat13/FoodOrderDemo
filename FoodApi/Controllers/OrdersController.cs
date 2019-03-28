@@ -43,6 +43,7 @@ namespace FoodApi.Controllers
         public void AddOrder([FromBody]Order order)
         {
             order.Id = Guid.NewGuid().ToString();
+            order.TotalAmount = order.Foods.Sum(it => it.Amount);
             order.Date = DateTime.Now;
             Orders.InsertOne(order);
         }

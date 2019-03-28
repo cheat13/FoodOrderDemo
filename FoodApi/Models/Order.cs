@@ -7,6 +7,7 @@ namespace FoodApi.Models
     {
         public string Id { get; set; }
         public List<Food> Foods { get; set; }
+        public int TotalAmount { get; set; }
         public double TotalPrice { get; set; }
         public DateTime Date { get; set; }
     }
