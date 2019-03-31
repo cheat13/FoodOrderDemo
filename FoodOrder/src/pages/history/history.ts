@@ -35,7 +35,7 @@ export class HistoryPage {
   }
 
   goOrderInfo(order: Order) {
-    this.navCtrl.push("OrderInfoPage");
+    this.navCtrl.push("OrderInfoPage", { order: order });
   }
 
 }

@@ -10,6 +10,52 @@
   </ion-navbar>
 </ion-header>
 
-<ion-content padding>
+<ion-content padding style="background-color: lightgray">
+
+  <ion-card>
+    <ion-item>
+      <ion-row>
+        <ion-col>
+          วันที่ {{ order.date | date: 'dd/MM/yyyy'}}
+        </ion-col>
+        <ion-col text-right>
+          เวลา {{ order.date | date: 'HH:mm'}} น.
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        {{ line }}
+      </ion-row>
+      <ion-row>
+        <ion-col text-center>
+          <b>รายการอาหาร</b>
+        </ion-col>
+      </ion-row>
+      <ion-row *ngFor="let food of order.foods">
+        <ion-col col-2>
+          {{ food.amount | number }}
+        </ion-col>
+        <ion-col col-8>
+          {{ food.name }}
+        </ion-col>
+        <ion-col col-2 text-right>
+          {{ food.amount * food.price | number }}
+        </ion-col>
+      </ion-row>
+      <ion-row>
+        {{ line }}
+      </ion-row>
+      <ion-row>
+        <ion-col col-2>
+          <b>รวม</b>
+        </ion-col>
+        <ion-col col-4>
+          {{ order.totalAmount | number }} รายการ
+        </ion-col>
+        <ion-col col-6 text-right>
+          <b>{{ order.totalPrice | number }} บาท</b>
+        </ion-col>
+      </ion-row>
+    </ion-item>
+  </ion-card>
 
 </ion-content>
